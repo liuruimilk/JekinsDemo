@@ -70,7 +70,6 @@ android {
         def fileName
         it.outputs.each {
             fileName = "${channel}_${createTime}_${buildType}.apk"
-            println "文件名：${fileName}"
             it.outputFileName = fileName
         }
     }
