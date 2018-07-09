@@ -40,6 +40,12 @@ android {
     }
 
     productFlavors {
+        main {
+            dimension "channel"
+        }
+        qa{
+            dimension "channel"
+        }
         xiaomi {
             dimension "channel"
         }
