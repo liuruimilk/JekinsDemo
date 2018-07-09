@@ -15,7 +15,7 @@ android {
     signingConfigs {
         debug {}
         release {
-            storeFile file("../keys/release")
+            storeFile file("../../keys/release")
             storePassword "123456"
             keyAlias "liumingrui"
             keyPassword "123456"
