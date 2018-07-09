@@ -11,13 +11,30 @@ android {
         flavorDimensions "channel"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
+
+    signingConfigs {
+        debug {}
+        release {
+            storeFile file("../keys/release")
+            storePassword "123456"
+            keyAlias "liumingrui"
+            keyPassword "123456"
+        }
+    }
+
     buildTypes {
         debug {
-            minifyEnabled false
-            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            signingConfig signingConfigs.debug
+            debuggable true
+            multiDexEnabled true
         }
         release {
-            minifyEnabled false
+            signingConfig signingConfigs.release
+            debuggable false
+            minifyEnabled true
+            shrinkResources true
+            zipAlignEnabled true
+            multiDexEnabled true
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
@@ -30,31 +47,27 @@ android {
             dimension "channel"
         }
     }
-
     applicationVariants.all {
-        //判断是release还是debug版本
         def buildType = it.buildType.name
         def fileName
-        //下面的channel是获取渠道号，你获取渠道号不一定会和我的代码一样，因为有可能你的渠道名称的规则和我的不一样，我的规则是${渠道名}-${applicationId},所以我是这样取的。
         def channel = it.productFlavors[0].name
-        //获取当前时间的"YYYY-MM-dd"格式。
-//        def createTime = new Date().format("YYYY-MM-dd", TimeZone.getTimeZone("GMT+08:00"))
         def createTime = BUILD_TIME
-        //只对Release包起作用，如果不是Release包则不变更输出路径，否则可能导致AS无法自动安装debug包。
-//        if (buildType == "release") {
-//            it.getPackageApplication().outputDirectory = new File(project.rootDir.absolutePath + "/apks/")
-//        }
-        it.getPackageApplication().outputDirectory = new File(project.rootDir.absolutePath + "/apks/")
+        if (createTime?.trim()) {
+            createTime = buildTime()
+        }
+        if (buildType == "release") {
+            it.getPackageApplication().outputDirectory = new File(project.rootDir.absolutePath + "/apks/")
+        }
         it.outputs.each {
             fileName = "${channel}_${createTime}_${buildType}.apk"
-            //将名字打印出来，以便及时查看是否满意。
             println "文件名：${fileName}"
-            //重新对apk命名。(适用于Gradle4.0以下版本)
-            //it.outputFile = new File(it.outputFile.parent, fileName)
-            //重新对apk命名。(适用于Gradle4.0（含）以上版本)如果你Gradle版本是4.0以下版本则将上面的一行代码放开并注释下面的这一行。
             it.outputFileName = fileName
         }
     }
+}
+
+def buildTime() {
+    return new Date().format("yyyy_MM_dd_HH:mm", TimeZone.getTimeZone("GMT+08:00"))
 }
 
 dependencies {
