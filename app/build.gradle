@@ -85,6 +85,12 @@ android {
             it.outputFileName = fileName
         }
     }
+
+    compileOptions {
+        encoding = 'utf-8'
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
 }
 
 def buildTime() {
