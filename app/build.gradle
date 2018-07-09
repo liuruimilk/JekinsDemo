@@ -7,7 +7,7 @@ android {
         minSdkVersion 24
         targetSdkVersion 27
         versionCode 1
-        versionName "1.0"
+        versionName getAppVersionNamefromTag()
         flavorDimensions "channel"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
@@ -48,16 +48,26 @@ android {
         }
     }
     applicationVariants.all {
-        def buildType = it.buildType.name
-        def fileName
-        def channel = it.productFlavors[0].name
+        def buildType = BUILD_TYPE
+        if(BUILD_TYPE?.trim()) {
+            buildType = it.buildType.name
+        }
+
+        def channel = PRODUCT_FLAVORS
+        if(PRODUCT_FLAVORS?.trim()) {
+            channel = it.productFlavors[0].name
+        }
+
         def createTime = BUILD_TIME
         if (createTime?.trim()) {
             createTime = buildTime()
         }
+
         if (buildType == "release") {
             it.getPackageApplication().outputDirectory = new File(project.rootDir.absolutePath + "/apks/")
         }
+
+        def fileName
         it.outputs.each {
             fileName = "${channel}_${createTime}_${buildType}.apk"
             println "文件名：${fileName}"
@@ -68,6 +78,15 @@ android {
 
 def buildTime() {
     return new Date().format("yyyy_MM_dd_HH:mm", TimeZone.getTimeZone("GMT+08:00"))
+}
+
+def getAppVersionNamefromTag() {
+    def stdout = new ByteArrayOutputStream()
+    exec {
+        commandLine 'git','describe','--abbrev=0','--tags'
+        standardOutput = stdout
+    }
+    return stdout.toString()
 }
 
 dependencies {
