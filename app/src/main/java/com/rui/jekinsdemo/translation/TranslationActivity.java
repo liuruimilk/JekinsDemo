@@ -22,16 +22,14 @@ public class TranslationActivity extends AppCompatActivity {
     iv = findViewById(R.id.iv);
     hsv = findViewById(R.id.hsv);
 
+    iv.setImageResource(R.drawable.roadmap_bg_0);
     ScreenUtils.NavigationBarStatusBar(this);
 
-    new Handler().post(new Runnable() {
-      @Override
-      public void run() {
-        hsv.measure(0,0);
-        int measuredWidth = hsv.getMeasuredWidth();
-        iv.setCalculateX(measuredWidth);
-        iv.setImageResource(R.drawable.roadmap_bg_0);
-      }
+    new Handler().post(() -> {
+      hsv.measure(0,0);
+      int measuredWidth = hsv.getMeasuredWidth();
+      iv.setCalculateX(measuredWidth);
+
     });
 
     hsv.setOnScrollChangeListener((v, scrollX, scrollY, oldScrollX, oldScrollY) -> {

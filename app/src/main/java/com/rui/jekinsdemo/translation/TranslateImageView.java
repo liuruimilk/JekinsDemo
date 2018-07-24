@@ -17,6 +17,8 @@ public class TranslateImageView extends AppCompatImageView {
 
   private Matrix a;
   private float b;
+  private float c;
+  private float d;
   private float e;
   private float f;
   private float g;
