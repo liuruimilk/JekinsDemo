@@ -38,7 +38,7 @@ android {
             multiDexEnabled true
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
-        qa{
+        qa {
             signingConfig signingConfigs.release
             debuggable false
             minifyEnabled true
@@ -62,12 +62,12 @@ android {
     }
     applicationVariants.all {
         def buildType = BUILD_TYPE
-        if(BUILD_TYPE?.trim()) {
+        if (BUILD_TYPE?.trim()) {
             buildType = it.buildType.name
         }
 
         def channel = PRODUCT_FLAVORS
-        if(PRODUCT_FLAVORS?.trim()) {
+        if (PRODUCT_FLAVORS?.trim()) {
             channel = it.productFlavors[0].name
         }
 
@@ -101,7 +101,7 @@ def buildTime() {
 def getAppVersionNamefromTag() {
     def stdout = new ByteArrayOutputStream()
     exec {
-        commandLine 'git','describe','--abbrev=0','--tags'
+        commandLine 'git', 'describe', '--abbrev=0', '--tags'
         standardOutput = stdout
     }
     return stdout.toString().trim()

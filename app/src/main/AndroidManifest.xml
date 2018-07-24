@@ -2,6 +2,8 @@
 <manifest package="com.rui.jekinsdemo"
   xmlns:android="http://schemas.android.com/apk/res/android">
 
+  <uses-permission android:name="android.permission.INTERNET" />
+
   <application
     android:name=".App"
     android:allowBackup="true"
@@ -17,10 +19,16 @@
         <category android:name="android.intent.category.LAUNCHER" />
       </intent-filter>
     </activity>
+
     <meta-data
       android:name="io.fabric.ApiKey"
       android:value="26f1a5bd6ce47542504b40e1b39e2270870146ef" />
+
+    <activity
+      android:name=".translation.TranslationActivity"
+      android:theme="@style/Theme.AppCompat.Light.NoActionBar"
+      android:screenOrientation="landscape">
+    </activity>
   </application>
 
-  <uses-permission android:name="android.permission.INTERNET" />
 </manifest>

@@ -11,9 +11,15 @@ import io.fabric.sdk.android.Fabric;
  **/
 public class App extends Application {
 
+  private static App app;
   @Override
   public void onCreate() {
     super.onCreate();
+    app = this;
     Fabric.with(this, new Crashlytics());
+  }
+
+  public static App getInstance() {
+    return app;
   }
 }
