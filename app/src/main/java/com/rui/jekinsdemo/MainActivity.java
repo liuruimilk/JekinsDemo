@@ -18,6 +18,6 @@ public class MainActivity extends AppCompatActivity {
 
   public void roadmap(View view) {
     startActivity(new Intent(this,TranslationActivity.class));
-    Log.d("1","1");
+    Log.d("2","2");
   }
 }
