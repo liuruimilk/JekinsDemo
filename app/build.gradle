@@ -11,6 +11,7 @@ android {
         versionName getAppVersionNamefromTag()
         flavorDimensions "channel"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+        multiDexEnabled true
     }
 
     signingConfigs {
@@ -27,7 +28,6 @@ android {
         debug {
             signingConfig signingConfigs.debug
             debuggable true
-            multiDexEnabled true
         }
         release {
             signingConfig signingConfigs.release
@@ -35,16 +35,6 @@ android {
             minifyEnabled true
             shrinkResources true
             zipAlignEnabled true
-            multiDexEnabled true
-            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
-        }
-        qa {
-            signingConfig signingConfigs.release
-            debuggable false
-            minifyEnabled true
-            shrinkResources true
-            zipAlignEnabled true
-            multiDexEnabled true
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
@@ -108,14 +98,16 @@ def getAppVersionNamefromTag() {
 }
 
 dependencies {
-    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    implementation fileTree(include: ['*.jar'], dir: 'libs')
     implementation 'com.android.support:appcompat-v7:27.1.1'
     implementation 'com.android.support.constraint:constraint-layout:2.0.0-alpha1'
     implementation 'com.android.support:recyclerview-v7:27.1.1'
+    implementation 'com.android.support:multidex:1.0.3'
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'com.android.support.test:runner:1.0.2'
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
     implementation('com.crashlytics.sdk.android:crashlytics:2.9.4@aar') {
         transitive = true;
     }
+    implementation project(':lib_common')
 }
