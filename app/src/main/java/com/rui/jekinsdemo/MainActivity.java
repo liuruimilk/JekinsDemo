@@ -17,5 +17,6 @@ public class MainActivity extends AppCompatActivity {
 
   public void roadmap(View view) {
     startActivity(new Intent(this,TranslationActivity.class));
+
   }
 }
